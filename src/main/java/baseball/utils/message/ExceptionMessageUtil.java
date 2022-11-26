@@ -1,5 +1,6 @@
 package baseball.utils.message;
 
+import baseball.utils.consts.GameCommandConst;
 import baseball.utils.consts.GameNumberConst;
 
 public enum ExceptionMessageUtil {
@@ -10,7 +11,11 @@ public enum ExceptionMessageUtil {
             GameNumberConst.MAX_VALUE),
 
     WRONG_SIZE("정답으로 입력되는 숫자는 중복되지 않은 %d자리 숫자여야 합니다.",
-            GameNumberConst.NUMBER_SIZE);
+            GameNumberConst.NUMBER_SIZE),
+
+    WRONG_COMMAND("게임 재시작 선택의 경우 %s 또는 %s만을 선택할 수 있습니다.",
+            GameCommandConst.RETRY,
+            GameCommandConst.EXIT);
 
     private final String message;
 
