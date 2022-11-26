@@ -6,6 +6,8 @@ import baseball.utils.consts.GameNumberConst;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class ExceptionMessageUtilTest {
 
@@ -30,14 +32,22 @@ class ExceptionMessageUtilTest {
         @DisplayName("만약 상수가 두개인 예외 메세지를 호출하면")
         class ContextWithConstsTest {
 
-            @Test
+            @ParameterizedTest
+            @CsvSource(
+                    value = {
+                        "WRONG_NUMBER_RANGE:1:9",
+                        "WRONG_COMMAND:1:2"
+                    },
+                    delimiter = ':'
+            )
             @DisplayName("상수가 적용된 예외 메세지를 반환한다")
-            void it_returns_exception_message() {
-                String actual = ExceptionMessageUtil.WRONG_NUMBER_RANGE.findFullMessage();
+            void it_returns_exception_message(ExceptionMessageUtil util,
+                String expectedConst1, String expectedConst2) {
+                String actual = util.findFullMessage();
 
                 assertThat(actual)
-                        .contains(String.valueOf(GameNumberConst.MIN_VALUE))
-                        .contains(String.valueOf(GameNumberConst.MAX_VALUE));
+                        .contains(expectedConst1)
+                        .contains(expectedConst2);
             }
         }
 
