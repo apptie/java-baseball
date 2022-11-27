@@ -55,7 +55,7 @@ public class InputView {
     private enum InputViewMessage {
         GAME_PLAY("숫자를 입력해주세요 : "),
 
-        GAME_COMMAND("게임을 새로 시작하려면 %d, 종료하려면 %d를 입력하세요.\n",
+        GAME_COMMAND("게임을 새로 시작하려면 %s, 종료하려면 %s를 입력하세요.\n",
                 GameCommandConst.RETRY,
                 GameCommandConst.EXIT);
 
