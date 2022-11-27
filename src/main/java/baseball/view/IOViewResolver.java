@@ -15,17 +15,17 @@ public class IOViewResolver {
     private final Map<Class<?>, Consumer<Object>> outputViewMappings = new HashMap<>();
     private final Map<Class<?>, Supplier<Object>> inputViewMappings = new HashMap<>();
 
-    public IOViewResolver(InputView inputView, OutputView outputView) {
+    public IOViewResolver(final InputView inputView, final OutputView outputView) {
         initInputViewMappings(inputView);
         initOutputViewMappings(outputView);
     }
 
-    private void initInputViewMappings(InputView inputView) {
+    private void initInputViewMappings(final InputView inputView) {
         inputViewMappings.put(ReadPlayerAnswerDto.class, inputView::readPlayerAnswer);
         inputViewMappings.put(ReadPlayerCommandDto.class, inputView::readPlayerCommand);
     }
 
-    private void initOutputViewMappings(OutputView outputView) {
+    private void initOutputViewMappings(final OutputView outputView) {
         outputViewMappings.put(PrintResultDto.class, dto -> outputView.printResult((PrintResultDto) dto));
         outputViewMappings
             .put(PrintExceptionMessageDto.class, dto -> outputView

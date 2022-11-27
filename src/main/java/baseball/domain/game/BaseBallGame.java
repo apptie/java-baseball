@@ -11,11 +11,11 @@ public class BaseBallGame {
 
     private BaseBallNumbers computerAnswer;
 
-    public BaseBallGame(BaseBallNumbers computerAnswer) {
+    public BaseBallGame(final BaseBallNumbers computerAnswer) {
         this.computerAnswer = computerAnswer;
     }
 
-    public GameResultDto calculateGameResult(ReadPlayerAnswerDto dto) {
+    public GameResultDto calculateGameResult(final ReadPlayerAnswerDto dto) {
         BaseBallNumbers playerAnswer = new BaseBallNumbers(dto.getPlayerInput());
 
         long strike = computerAnswer.calculateStrike(playerAnswer);
@@ -24,7 +24,7 @@ public class BaseBallGame {
         return new GameResultDto(strike, ball);
     }
 
-    public GameCommandDto calculateGameCommand(ReadPlayerCommandDto dto) {
+    public GameCommandDto calculateGameCommand(final ReadPlayerCommandDto dto) {
         GameCommand gameCommand = GameCommand.findGameCommand(dto.getPlayerCommand());
 
         if (gameCommand == GameCommand.RETRY) {

@@ -19,7 +19,7 @@ public enum ExceptionMessageUtil {
 
     private final String message;
 
-    ExceptionMessageUtil(String baseMessage, Object... replaces) {
+    ExceptionMessageUtil(String baseMessage, final Object... replaces) {
         this.message = String.format(baseMessage, replaces);
     }
 

@@ -14,7 +14,7 @@ public class InputView {
 
     private final Consumer<String> print;
 
-    public InputView(Consumer<String> print) {
+    public InputView(final Consumer<String> print) {
         this.print = print;
     }
 

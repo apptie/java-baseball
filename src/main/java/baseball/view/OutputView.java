@@ -8,15 +8,15 @@ public class OutputView {
 
     private final Consumer<String> print;
 
-    public OutputView(Consumer<String> print) {
+    public OutputView(final Consumer<String> print) {
         this.print = print;
     }
 
-    public void printResult(PrintResultDto dto) {
+    public void printResult(final PrintResultDto dto) {
         print.accept(OutputViewMessage.findFullMessage(dto.getStrike(), dto.getBall()));
     }
 
-    public void printExceptionMessage(PrintExceptionMessageDto dto) {
+    public void printExceptionMessage(final PrintExceptionMessageDto dto) {
         print.accept(OutputViewMessage.findFullMessage(dto.getMessage()));
     }
 

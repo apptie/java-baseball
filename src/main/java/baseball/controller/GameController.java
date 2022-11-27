@@ -24,7 +24,7 @@ public class GameController {
     private final Map<GameStatus, Supplier<GameStatus>> gameStatusMappings;
     private BaseBallGame baseBallGame;
 
-    public GameController(IOViewResolver ioViewResolver) {
+    public GameController(final IOViewResolver ioViewResolver) {
         gameStatusMappings = new EnumMap<>(GameStatus.class);
 
         this.ioViewResolver = ioViewResolver;
@@ -37,7 +37,7 @@ public class GameController {
         gameStatusMappings.put(GameStatus.GAME_EXIT, this::retryGame);
     }
 
-    public GameStatus process(GameStatus gameStatus) {
+    public GameStatus process(final GameStatus gameStatus) {
         try {
             return gameStatusMappings.get(gameStatus).get();
         } catch (IllegalArgumentException e) {

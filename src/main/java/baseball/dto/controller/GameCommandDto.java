@@ -6,7 +6,7 @@ public class GameCommandDto {
 
     private final GameStatus nextGameStatus;
 
-    public GameCommandDto(GameStatus nextGameStatus) {
+    public GameCommandDto(final GameStatus nextGameStatus) {
         this.nextGameStatus = nextGameStatus;
     }
 

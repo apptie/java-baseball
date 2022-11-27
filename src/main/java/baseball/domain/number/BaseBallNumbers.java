@@ -45,7 +45,7 @@ public class BaseBallNumbers {
         return Collections.unmodifiableList(randomNumbers);
     }
 
-    private void validatePlayerAnswer(List<BaseBallNumber> playerAnswer) {
+    private void validatePlayerAnswer(final List<BaseBallNumber> playerAnswer) {
         if (playerAnswer.size() != GameNumberConst.NUMBER_SIZE) {
             throw new IllegalArgumentException(ExceptionMessageUtil.WRONG_SIZE.findFullMessage());
         }
@@ -69,7 +69,7 @@ public class BaseBallNumbers {
         }
     }
 
-    private void addRandomNumbers(List<Integer> randomNumbers) {
+    private void addRandomNumbers(final List<Integer> randomNumbers) {
         int newNumbers = Randoms.pickNumberInRange(GameNumberConst.MIN_VALUE, GameNumberConst.MAX_VALUE);
 
         if (!randomNumbers.contains(newNumbers)) {
@@ -77,13 +77,13 @@ public class BaseBallNumbers {
         }
     }
 
-    public long calculateStrike(BaseBallNumbers playerAnswer) {
+    public long calculateStrike(final BaseBallNumbers playerAnswer) {
         return playerAnswer.numbers.stream()
                 .filter(this::isStrike)
                 .count();
     }
 
-    public long calculateBall(BaseBallNumbers playerAnswer) {
+    public long calculateBall(final BaseBallNumbers playerAnswer) {
         return playerAnswer.numbers.stream()
                 .filter(this::isBall)
                 .count();
