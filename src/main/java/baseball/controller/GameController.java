@@ -62,7 +62,12 @@ public class GameController {
         GameResultDto gameResultDto = baseBallGame.calculateGameResult(readPlayerAnswerDto);
 
         ioViewResolver.outputViewResolve(new PrintResultDto(gameResultDto.getStrike(), gameResultDto.getBall()));
-        return gameResultDto.getNextGameStatus();
+        GameStatus nextGameStatus = gameResultDto.getNextGameStatus();
+
+        if (nextGameStatus == GameStatus.GAME_EXIT) {
+            GuideView.printEndLog();
+        }
+        return nextGameStatus;
     }
 
     private GameStatus retryGame() {
