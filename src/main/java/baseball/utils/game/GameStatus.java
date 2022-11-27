@@ -16,9 +16,6 @@ public enum GameStatus {
     }
 
     public boolean playable() {
-        if (this == APPLICATION_EXIT) {
-            return false;
-        }
-        return true;
+        return this != APPLICATION_EXIT;
     }
 }
