@@ -7,9 +7,9 @@ import baseball.dto.controller.GameResultDto;
 import baseball.dto.input.ReadPlayerAnswerDto;
 import baseball.dto.input.ReadPlayerCommandDto;
 import baseball.dto.output.PrintExceptionMessageDto;
+import baseball.dto.output.PrintGuideMessageDto;
 import baseball.dto.output.PrintResultDto;
 import baseball.utils.game.GameStatus;
-import baseball.view.GuideView;
 import baseball.view.IOViewResolver;
 import baseball.view.exception.NotFoundViewException;
 import java.util.EnumMap;
@@ -41,7 +41,7 @@ public class GameController {
         try {
             return gameStatusMappings.get(gameStatus).get();
         } catch (IllegalArgumentException e) {
-            ioViewResolver.outputViewResolve(new PrintExceptionMessageDto(e.getMessage()));
+            ioViewResolver.resolveOutputView(new PrintExceptionMessageDto(e.getMessage()));
             throw e;
         } catch (NullPointerException | NotFoundViewException e) {
             System.out.println(APPLICATION_EXCEPTION_MESSAGE);
@@ -50,28 +50,27 @@ public class GameController {
     }
 
     private GameStatus startGame() {
-        GuideView.printStartLog();
-
+        ioViewResolver.resolveOutputView(new PrintGuideMessageDto(GameStatus.APPLICATION_START));
         baseBallGame = new BaseBallGame(new BaseBallNumbers());
 
         return GameStatus.GAME_PLAY;
     }
 
     private GameStatus playGame() {
-        ReadPlayerAnswerDto readPlayerAnswerDto = ioViewResolver.inputViewResolve(ReadPlayerAnswerDto.class);
+        ReadPlayerAnswerDto readPlayerAnswerDto = ioViewResolver.resolveInputView(ReadPlayerAnswerDto.class);
         GameResultDto gameResultDto = baseBallGame.calculateGameResult(readPlayerAnswerDto);
 
-        ioViewResolver.outputViewResolve(new PrintResultDto(gameResultDto.getStrike(), gameResultDto.getBall()));
+        ioViewResolver.resolveOutputView(new PrintResultDto(gameResultDto.getStrike(), gameResultDto.getBall()));
         GameStatus nextGameStatus = gameResultDto.getNextGameStatus();
 
         if (nextGameStatus == GameStatus.GAME_EXIT) {
-            GuideView.printEndLog();
+            ioViewResolver.resolveOutputView(new PrintGuideMessageDto(nextGameStatus));
         }
         return nextGameStatus;
     }
 
     private GameStatus retryGame() {
-        ReadPlayerCommandDto readPlayerCommandDto = ioViewResolver.inputViewResolve(ReadPlayerCommandDto.class);
+        ReadPlayerCommandDto readPlayerCommandDto = ioViewResolver.resolveInputView(ReadPlayerCommandDto.class);
         GameCommandDto gameCommandDto = baseBallGame.calculateGameCommand(readPlayerCommandDto);
 
         return gameCommandDto.getNextGameStatus();
