@@ -78,9 +78,9 @@ class BaseBallNumbersTest {
 
     @Nested
     @DisplayName("calculateStrike 메소드는")
-    class DescribeCalculateStrike extends DefaultBaseBallNumbersBeforeEach {
+    class DescribeCalculateStrikeMethodTest extends DefaultBaseBallNumbersBeforeEach {
 
-        private BaseBallNumbers defaultBaseBallNumbers = new BaseBallNumbers("123");
+        private final BaseBallNumbers defaultBaseBallNumbers = new BaseBallNumbers("123");
 
         @Nested
         @DisplayName("만약 BaseBallNumbers가 주어지면")

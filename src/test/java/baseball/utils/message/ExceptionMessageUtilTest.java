@@ -42,7 +42,7 @@ class ExceptionMessageUtilTest {
             )
             @DisplayName("상수가 적용된 예외 메세지를 반환한다")
             void it_returns_exception_message(ExceptionMessageUtil util,
-                String expectedConst1, String expectedConst2) {
+                    String expectedConst1, String expectedConst2) {
                 String actual = util.findFullMessage();
 
                 assertThat(actual)

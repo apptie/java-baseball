@@ -58,8 +58,8 @@ class BaseBallGameTest {
 
             @ParameterizedTest
             @ValueSource(strings = {"121", "1234", "12", "@12", " 12"})
-            @DisplayName("게임 결과를 계산해 GameResultDto를 반환한다")
-            void it_returns_gameResultDto(String playerAnswer) {
+            @DisplayName("IllegalArgumentException 예외가 발생한다")
+            void it_throws_exception(String playerAnswer) {
                 ReadPlayerAnswerDto dto = new ReadPlayerAnswerDto(playerAnswer);
 
                 BaseBallGame baseBallGame = new BaseBallGame(new BaseBallNumbers(defaultComputerAnswer));
@@ -110,7 +110,7 @@ class BaseBallGameTest {
             @ParameterizedTest
             @ValueSource(strings = {"0", "3", "@", " "})
             @DisplayName("IllegalArgumentException 예외가 발생한다")
-            void it_returns_GameCommandDto(String input) {
+            void it_throws_exception(String input) {
                 ReadPlayerCommandDto dto = new ReadPlayerCommandDto(input);
 
                 assertThatThrownBy(() -> baseBallGame.calculateGameCommand(dto))

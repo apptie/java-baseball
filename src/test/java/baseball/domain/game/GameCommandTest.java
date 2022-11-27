@@ -22,11 +22,11 @@ class GameCommandTest {
 
             @ParameterizedTest
             @CsvSource(
-                value = {
-                    "1:RETRY",
-                    "2:EXIT"
-                },
-                delimiter = ':'
+                    value = {
+                        "1:RETRY",
+                        "2:EXIT"
+                    },
+                    delimiter = ':'
             )
             @DisplayName("command에 맞는 GameCommand를 반환한다")
             void it_returns_gameCommand(String input, GameCommand expected) {
@@ -42,11 +42,11 @@ class GameCommandTest {
 
             @ParameterizedTest
             @ValueSource(strings = {"0", "3", "a", "@", " "})
-            @DisplayName("command에 맞는 GameCommand를 반환한다")
-            void it_returns_gameCommand(String invalidInput) {
+            @DisplayName("IllegalArgumentException 에외가 발생한다")
+            void it_throws_exception(String invalidInput) {
                 assertThatThrownBy(() -> GameCommand.findGameCommand(invalidInput))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage(ExceptionMessageUtil.WRONG_COMMAND.findFullMessage());
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage(ExceptionMessageUtil.WRONG_COMMAND.findFullMessage());
             }
         }
     }

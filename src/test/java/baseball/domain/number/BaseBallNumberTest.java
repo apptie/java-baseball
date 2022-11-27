@@ -23,18 +23,18 @@ class BaseBallNumberTest {
 
             @ParameterizedTest
             @CsvSource(
-                value = {
-                    "1:0",
-                    "2:1",
-                    "3:2",
-                    "4:2",
-                    "5:2",
-                    "6:2",
-                    "7:2",
-                    "8:2",
-                    "9:2"
-                },
-                delimiter = ':'
+                    value = {
+                        "1:0",
+                        "2:1",
+                        "3:2",
+                        "4:2",
+                        "5:2",
+                        "6:2",
+                        "7:2",
+                        "8:2",
+                        "9:2"
+                    },
+                    delimiter = ':'
             )
             @DisplayName("number, index를 초기화한 BaseBallNumber를 반환한다")
             void it_returns_baseBallNumber(int number, int index) {
@@ -116,6 +116,8 @@ class BaseBallNumberTest {
             @DisplayName("number가 같고 index가 다른지 여부를 반환한다")
             void it_returns_equalsNumber(int number, int index, boolean expected) {
                 boolean actual = defaultBaseBallNumber.equalsOnlyNumber(new BaseBallNumber(number, index));
+
+                assertThat(actual).isSameAs(expected);
             }
         }
     }
