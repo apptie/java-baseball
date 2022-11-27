@@ -50,8 +50,7 @@ class GameStatusTest {
                         "APPLICATION_START:true",
                         "GAME_PLAY:true",
                         "GAME_EXIT:true",
-                        "APPLICATION_EXIT:false",
-                        "APPLICATION_EXCEPTION:false"
+                        "APPLICATION_EXIT:false"
                     },
                     delimiter = ':'
             )
