@@ -11,6 +11,6 @@ public class PrintGuideMessageDto {
     }
 
     public boolean isEndOfGame() {
-        return gameStatus == GameStatus.APPLICATION_EXIT;
+        return gameStatus == GameStatus.GAME_EXIT;
     }
 }
