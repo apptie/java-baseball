@@ -18,7 +18,7 @@ class BaseBallNumberTest {
     class DescribeConstructorTest {
 
         @Nested
-        @DisplayName("만약 유효한 숫자와 인덱스를 전달받으면")
+        @DisplayName("만약 1 ~ 9까지의 유효한 숫자와 0 ~ 2까지의 유효한 인덱스를 전달받으면")
         class ContextWithNumberAndIndexTest {
 
             @ParameterizedTest
@@ -43,7 +43,7 @@ class BaseBallNumberTest {
         }
 
         @Nested
-        @DisplayName("만약 유효하지 않은 숫자와 유효한 인덱스를 전달받으면")
+        @DisplayName("만약 유효하지 않은 숫자와 0 ~ 2까지의 유효한 인덱스를 전달받으면")
         class ContextWithInvalidNumberAndIndexTest {
 
             @ParameterizedTest
@@ -56,7 +56,7 @@ class BaseBallNumberTest {
         }
 
         @Nested
-        @DisplayName("만약 유효한 숫자와 유효하지 않은 인덱스를 전달받으면")
+        @DisplayName("만약 1 ~ 9까지의 유효한 숫자와 유효하지 않은 인덱스를 전달받으면")
         class ContextWithNumberAndInvalidIndexTest {
 
             @ParameterizedTest

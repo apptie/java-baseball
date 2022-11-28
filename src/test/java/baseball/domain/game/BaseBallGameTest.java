@@ -26,7 +26,7 @@ class BaseBallGameTest {
     class DescribeCalculateGameResultMethodTest {
 
         @Nested
-        @DisplayName("만약 유효한 ReadPlayerAnswerDto가 주어지면")
+        @DisplayName("만약 1 ~ 9까지의 중복되지 않는 세 자릿수의 유효한 숫자가 저장된 ReadPlayerAnswerDto가 주어지면")
         class ContextWithReadPlayerAnswerDtoTest {
 
             @ParameterizedTest
@@ -57,7 +57,7 @@ class BaseBallGameTest {
         class ContextWithInvalidReadPlayerAnswerDtoTest {
 
             @ParameterizedTest
-            @ValueSource(strings = {"121", "1234", "12", "@12", " 12"})
+            @ValueSource(strings = {"121", "1234", "12", "@12", " 12", "012"})
             @DisplayName("IllegalArgumentException 예외가 발생한다")
             void it_throws_exception(String playerAnswer) {
                 ReadPlayerAnswerDto dto = new ReadPlayerAnswerDto(playerAnswer);
@@ -82,7 +82,7 @@ class BaseBallGameTest {
         }
 
         @Nested
-        @DisplayName("만약 유효한 ReadPlayerCommandDto가 주어지면")
+        @DisplayName("만약 1 또는 2의 유효한 command가 저장된 ReadPlayerCommandDto가 주어지면")
         class ContextWithReadPlayerCommandDtoTest {
 
             @ParameterizedTest

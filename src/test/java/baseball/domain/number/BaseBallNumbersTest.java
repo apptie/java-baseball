@@ -36,7 +36,7 @@ class BaseBallNumbersTest {
     class DescribeStringConstructorTest {
 
         @Nested
-        @DisplayName("만약 유효한 입력이 주어지면")
+        @DisplayName("만약 1 ~ 9까지의 중복되지 않는 세 자릿수의 유효한 숫자를 입력으로 주어지면")
         class ContextWithInputTest {
 
             @ParameterizedTest

@@ -17,7 +17,7 @@ class GameCommandTest {
     class DescribeFindGameCommandMethodTest {
 
         @Nested
-        @DisplayName("만약 유효한 command가 주어지면")
+        @DisplayName("만약 1 또는 2의 유효한 command가 주어지면")
         class ContextWithCommandTest {
 
             @ParameterizedTest
