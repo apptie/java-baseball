@@ -20,8 +20,8 @@ public final class GameRunner {
     }
 
     private static GameController initGameController() {
-        InputView inputView = new InputView(System.out::print);
-        OutputView outputView = new OutputView(System.out::println);
+        InputView inputView = InputView.getInstance();
+        OutputView outputView = OutputView.getInstance();
 
         return new GameController(new IOViewResolver(inputView, outputView));
     }

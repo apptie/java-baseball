@@ -6,20 +6,24 @@ import baseball.utils.consts.GameCommandConst;
 import baseball.utils.consts.GameNumberConst;
 import baseball.utils.message.ExceptionMessageUtil;
 import camp.nextstep.edu.missionutils.Console;
-import java.util.function.Consumer;
 
 public class InputView {
 
     private static final int COMMAND_LENGTH = 1;
 
-    private final Consumer<String> print;
+    private InputView() {
+    }
 
-    public InputView(final Consumer<String> print) {
-        this.print = print;
+    private static class InputViewSingletonHelper {
+        private static final InputView INPUT_VIEW = new InputView();
+    }
+
+    public static InputView getInstance(){
+        return InputViewSingletonHelper.INPUT_VIEW;
     }
 
     public ReadPlayerAnswerDto readPlayerAnswer() {
-        print.accept(InputViewMessage.GAME_PLAY.message);
+        print(InputViewMessage.GAME_PLAY.message);
 
         String playerAnswer = processPlayerInput();
 
@@ -34,7 +38,7 @@ public class InputView {
     }
 
     public ReadPlayerCommandDto readPlayerCommand() {
-        print.accept(InputViewMessage.GAME_COMMAND.message);
+        print(InputViewMessage.GAME_COMMAND.message);
 
         String playerCommand = processPlayerInput();
 
@@ -50,6 +54,10 @@ public class InputView {
 
     private String processPlayerInput() {
         return Console.readLine();
+    }
+
+    private void print(String message) {
+        System.out.print(message);
     }
 
     private enum InputViewMessage {

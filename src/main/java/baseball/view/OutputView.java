@@ -3,27 +3,30 @@ package baseball.view;
 import baseball.dto.output.PrintExceptionMessageDto;
 import baseball.dto.output.PrintGuideMessageDto;
 import baseball.dto.output.PrintResultDto;
-import baseball.utils.game.GameStatus;
-import java.util.function.Consumer;
 
 public class OutputView {
 
-    private final Consumer<String> print;
+    private OutputView() {
+    }
 
-    public OutputView(final Consumer<String> print) {
-        this.print = print;
+    private static class OutputViewSingletonHelper {
+        private static final OutputView OUTPUT_VIEW = new OutputView();
+    }
+
+    public static OutputView getInstance(){
+        return OutputViewSingletonHelper.OUTPUT_VIEW;
     }
 
     public void printResult(final PrintResultDto dto) {
-        print.accept(OutputViewMessage.findFullMessage(dto.getStrike(), dto.getBall()));
+        print(OutputViewMessage.findFullMessage(dto.getStrike(), dto.getBall()));
     }
 
     public void printExceptionMessage(final PrintExceptionMessageDto dto) {
-        print.accept(OutputViewMessage.findFullMessage(dto.getMessage()));
+        print(OutputViewMessage.findFullMessage(dto.getMessage()));
     }
 
     public void printGuideMessage(final PrintGuideMessageDto dto) {
-        print.accept(findGuideMessage(dto.isEndOfGame()));
+        print(findGuideMessage(dto.isEndOfGame()));
     }
 
     private String findGuideMessage(boolean isEndOfGame) {
@@ -31,6 +34,10 @@ public class OutputView {
             return OutputViewMessage.GAME_END.message;
         }
         return OutputViewMessage.GAME_START.message;
+    }
+
+    private void print(String message) {
+        System.out.println(message);
     }
 
     private enum OutputViewMessage {
