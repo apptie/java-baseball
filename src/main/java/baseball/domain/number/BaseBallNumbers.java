@@ -1,11 +1,11 @@
 package baseball.domain.number;
 
+import baseball.domain.number.exception.WrongGeneratorException;
 import baseball.utils.consts.GameNumberConst;
+import baseball.utils.generator.BaseBallNumberGenerator;
 import baseball.utils.message.ExceptionMessageUtil;
-import camp.nextstep.edu.missionutils.Randoms;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -17,8 +17,8 @@ public class BaseBallNumbers {
 
     private final List<BaseBallNumber> numbers;
 
-    public BaseBallNumbers() {
-        this.numbers = createComputerAnswer();
+    public BaseBallNumbers(BaseBallNumberGenerator generator) {
+        this.numbers = createComputerAnswer(generator);
     }
 
     public BaseBallNumbers(String playerInput) {
@@ -28,24 +28,46 @@ public class BaseBallNumbers {
         this.numbers = playerAnswer;
     }
 
-    private List<BaseBallNumber> createComputerAnswer() {
-        List<Integer> randomNumbers = createRandomNumbers();
+    private List<BaseBallNumber> createComputerAnswer(BaseBallNumberGenerator generator) {
+        List<Integer> randomNumbers = createRandomNumbers(generator);
 
         return IntStream.range(0, GameNumberConst.NUMBER_SIZE)
                 .mapToObj(index -> new BaseBallNumber(randomNumbers.get(index), index))
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private List<Integer> createRandomNumbers() {
+    private List<Integer> createRandomNumbers(BaseBallNumberGenerator generator) {
         List<Integer> randomNumbers = new ArrayList<>();
 
         while (randomNumbers.size() < GameNumberConst.NUMBER_SIZE) {
-            addRandomNumbers(randomNumbers);
+            randomNumbers.add(createUniqueNumber(randomNumbers, generator));
         }
-        return Collections.unmodifiableList(randomNumbers);
+        return randomNumbers;
     }
 
-    private void validatePlayerAnswer(final List<BaseBallNumber> playerAnswer) {
+    private Integer createUniqueNumber(List<Integer> randomNumbers, BaseBallNumberGenerator generator) {
+        int randomNumber = createValidRandomNumber(generator);
+
+        while (randomNumbers.contains(randomNumber)) {
+            randomNumber = createValidRandomNumber(generator);
+        }
+        return randomNumber;
+    }
+
+    private Integer createValidRandomNumber(BaseBallNumberGenerator generator) {
+        int randomNumber = generator.generate();
+
+        validateRandomNumber(randomNumber);
+        return randomNumber;
+    }
+
+    private void validateRandomNumber(int randomNumber) {
+        if (!(GameNumberConst.MIN_VALUE <= randomNumber && randomNumber <= GameNumberConst.MAX_VALUE)) {
+            throw new WrongGeneratorException();
+        }
+    }
+
+    private void validatePlayerAnswer(List<BaseBallNumber> playerAnswer) {
         if (playerAnswer.size() != GameNumberConst.NUMBER_SIZE) {
             throw new IllegalArgumentException(ExceptionMessageUtil.WRONG_SIZE.findFullMessage());
         }
@@ -66,14 +88,6 @@ public class BaseBallNumbers {
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException(ExceptionMessageUtil.WRONG_NUMBER.findFullMessage(), e);
-        }
-    }
-
-    private void addRandomNumbers(final List<Integer> randomNumbers) {
-        int newNumbers = Randoms.pickNumberInRange(GameNumberConst.MIN_VALUE, GameNumberConst.MAX_VALUE);
-
-        if (!randomNumbers.contains(newNumbers)) {
-            randomNumbers.add(newNumbers);
         }
     }
 

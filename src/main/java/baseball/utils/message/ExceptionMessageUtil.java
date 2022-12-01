@@ -15,7 +15,11 @@ public enum ExceptionMessageUtil {
 
     WRONG_COMMAND("게임 재시작 선택의 경우 %s 또는 %s만을 선택할 수 있습니다.",
             GameCommandConst.RETRY,
-            GameCommandConst.EXIT);
+            GameCommandConst.EXIT),
+
+    WRONG_GENERATOR("정답으로 생성되는 숫자는 %d부터 %d 사이의 값이여야 합니다.",
+            GameNumberConst.MIN_VALUE,
+            GameNumberConst.MAX_VALUE);
 
     private final String message;
 
