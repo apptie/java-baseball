@@ -19,7 +19,9 @@ public enum ExceptionMessageUtil {
 
     WRONG_GENERATOR("정답으로 생성되는 숫자는 %d부터 %d 사이의 값이여야 합니다.",
             GameNumberConst.MIN_VALUE,
-            GameNumberConst.MAX_VALUE);
+            GameNumberConst.MAX_VALUE),
+
+    NOT_FOUND_VIEW("지정한 View를 찾을 수 없습니다.");
 
     private final String message;
 
