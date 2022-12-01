@@ -1,7 +1,6 @@
 package baseball.controller;
 
 import baseball.domain.game.BaseBallGame;
-import baseball.domain.number.BaseBallNumbers;
 import baseball.domain.number.exception.WrongGeneratorException;
 import baseball.dto.controller.GameCommandDto;
 import baseball.dto.controller.GameResultDto;
