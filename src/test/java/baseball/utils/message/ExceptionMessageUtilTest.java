@@ -36,6 +36,7 @@ class ExceptionMessageUtilTest {
             @CsvSource(
                     value = {
                         "WRONG_NUMBER_RANGE:1:9",
+                        "WRONG_GENERATOR:1:9",
                         "WRONG_COMMAND:1:2"
                     },
                     delimiter = ':'

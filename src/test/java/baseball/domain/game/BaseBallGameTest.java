@@ -3,11 +3,11 @@ package baseball.domain.game;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import baseball.domain.number.BaseBallNumbers;
 import baseball.dto.controller.GameCommandDto;
 import baseball.dto.controller.GameResultDto;
 import baseball.dto.input.ReadPlayerAnswerDto;
 import baseball.dto.input.ReadPlayerCommandDto;
+import baseball.helper.common.DefaultBaseBallNumberGeneratorField;
 import baseball.utils.game.GameStatus;
 import baseball.utils.message.ExceptionMessageUtil;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,11 +19,9 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class BaseBallGameTest {
 
-    private final String defaultComputerAnswer = "123";
-
     @Nested
     @DisplayName("calculateGameResult 메소드는")
-    class DescribeCalculateGameResultMethodTest {
+    class DescribeCalculateGameResultMethodTest extends DefaultBaseBallNumberGeneratorField {
 
         @Nested
         @DisplayName("만약 1 ~ 9까지의 중복되지 않는 세 자릿수의 유효한 숫자가 저장된 ReadPlayerAnswerDto가 주어지면")
@@ -43,7 +41,8 @@ class BaseBallGameTest {
             @DisplayName("게임 결과를 계산해 GameResultDto를 반환한다")
             void it_returns_gameResultDto(String playerAnswer, long expectedStrike, long expectedBall) {
                 ReadPlayerAnswerDto dto = new ReadPlayerAnswerDto(playerAnswer);
-                BaseBallGame baseBallGame = new BaseBallGame(new BaseBallNumbers(defaultComputerAnswer));
+
+                BaseBallGame baseBallGame = new BaseBallGame(generator);
 
                 GameResultDto actual = baseBallGame.calculateGameResult(dto);
 
@@ -62,7 +61,7 @@ class BaseBallGameTest {
             void it_throws_exception(String playerAnswer) {
                 ReadPlayerAnswerDto dto = new ReadPlayerAnswerDto(playerAnswer);
 
-                BaseBallGame baseBallGame = new BaseBallGame(new BaseBallNumbers(defaultComputerAnswer));
+                BaseBallGame baseBallGame = new BaseBallGame(generator);
 
                 assertThatThrownBy(() -> baseBallGame.calculateGameResult(dto))
                         .isInstanceOf(IllegalArgumentException.class);
@@ -72,13 +71,13 @@ class BaseBallGameTest {
 
     @Nested
     @DisplayName("calculateGameCommand 메소드는")
-    class DescribeCalculateGameCommandMethodTest {
+    class DescribeCalculateGameCommandMethodTest extends DefaultBaseBallNumberGeneratorField {
 
         private BaseBallGame baseBallGame;
 
         @BeforeEach
         void initGameComputer() {
-            baseBallGame = new BaseBallGame(new BaseBallNumbers(defaultComputerAnswer));
+            baseBallGame = new BaseBallGame(generator);
         }
 
         @Nested

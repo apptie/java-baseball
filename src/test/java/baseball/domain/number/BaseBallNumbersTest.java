@@ -4,6 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import baseball.domain.number.exception.WrongGeneratorException;
+import baseball.helper.common.DefaultBaseBallNumberGeneratorField;
+import baseball.utils.generator.BaseBallNumberGenerator;
+import baseball.utils.generator.StandardBaseBallNumberGenerator;
 import baseball.utils.message.ExceptionMessageUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -16,17 +20,32 @@ import org.junit.jupiter.params.provider.ValueSource;
 class BaseBallNumbersTest {
 
     @Nested
-    @DisplayName("기본 생성자는")
-    class DescribeDefaultConstructorTest {
+    @DisplayName("BaseBallNumberGenerator generator를 매개변수로 받는 생성자는")
+    class DescribeBaseBallNumberGeneratorConstructorTest {
 
         @Nested
-        @DisplayName("만약 호출되면")
-        class ContextWithoutParameterTest {
+        @DisplayName("만약 유효한 generator가 주어지면")
+        class ContextWithBaseBallNumberGeneratorTest extends DefaultBaseBallNumberGeneratorField {
 
             @RepeatedTest(10)
             @DisplayName("BaseBallNumbers를 반환한다")
             void it_returns_baseBallNumbers() {
-                assertThatCode(BaseBallNumbers::new).doesNotThrowAnyException();
+                assertThatCode(() -> new BaseBallNumbers(generator)).doesNotThrowAnyException();
+            }
+        }
+
+        @Nested
+        @DisplayName("만약 유효하지 않은 generator가 주어지면")
+        class ContextWithInvalidBaseBallNumberGeneratorTest {
+
+            private final BaseBallNumberGenerator invalidGenerator = new StandardBaseBallNumberGenerator(0, 0);
+
+            @RepeatedTest(10)
+            @DisplayName("WrongGeneratorException 예외가 발생한다")
+            void it_throws_exception() {
+                assertThatThrownBy(() -> new BaseBallNumbers(invalidGenerator))
+                        .isInstanceOf(WrongGeneratorException.class)
+                        .hasMessageContaining(ExceptionMessageUtil.WRONG_GENERATOR.findFullMessage());
             }
         }
     }
@@ -136,13 +155,13 @@ class BaseBallNumbersTest {
         }
     }
 
-    private abstract class DefaultBaseBallNumbersBeforeEach {
+    private abstract class DefaultBaseBallNumbersBeforeEach extends DefaultBaseBallNumberGeneratorField {
 
         protected BaseBallNumbers defaultBaseBallNumbers;
 
         @BeforeEach
         void initDefaultBaseBallNumbers() {
-            defaultBaseBallNumbers = new BaseBallNumbers("123");
+            defaultBaseBallNumbers = new BaseBallNumbers(generator);
         }
     }
 }
