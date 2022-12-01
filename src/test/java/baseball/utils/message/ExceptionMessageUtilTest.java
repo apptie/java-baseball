@@ -56,12 +56,19 @@ class ExceptionMessageUtilTest {
         @DisplayName("만약 상수가 존재하지 않는 예외 메세지를 호출하면")
         class ContextWithoutConstTest {
 
-            @Test
+            @ParameterizedTest
+            @CsvSource(
+                    value = {
+                        "WRONG_NUMBER:정답은 숫자여야 합니다",
+                        "NOT_FOUND_VIEW:지정한 View를 찾을 수 없습니다."
+                    },
+                    delimiter = ':'
+            )
             @DisplayName("예외 메세지를 반환한다")
-            void it_returns_exception_message() {
-                String actual = ExceptionMessageUtil.WRONG_NUMBER.findFullMessage();
+            void it_returns_exception_message(ExceptionMessageUtil util, String expected) {
+                String actual = util.findFullMessage();
 
-                assertThat(actual).contains("정답은 숫자여야 합니다");
+                assertThat(actual).contains(expected);
             }
         }
     }
